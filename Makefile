@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2023-2024 fantastic-packages
+# Copyright (C) 2023-2025 fantastic-packages
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=fantastic-packages-feeds
-PKG_VERSION:=20241201
+PKG_VERSION:=20250513
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Anya Lin <hukk1996@gmail.com>
@@ -68,7 +68,7 @@ else
 	BRANCH=$$(echo $$VERSION_NUMBER | awk -F '.' -v OFS='.' '{print $$1,$$2}')
 fi
 if ! grep -q fantastic_packages_ "$$IPKG_INSTROOT/etc/opkg/customfeeds.conf"; then
-	BASE_URL="https://fantastic-packages.github.io/packages/releases"
+	BASE_URL="https://fantastic-packages.github.io/releases"
 	BASE_URL="$$BASE_URL/$$BRANCH/packages/$$ARCH_PACKAGES"
 	cat <<- EOF >> "$$IPKG_INSTROOT/etc/opkg/customfeeds.conf"
 	src/gz fantastic_packages_packages $$BASE_URL/packages
