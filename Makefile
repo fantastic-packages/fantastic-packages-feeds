@@ -32,6 +32,7 @@ endef
 
 define Package/$(PKG_NAME)/postinst
 #!/bin/sh
+export REVISION VERSION_NUMBER ARCH_PACKAGES
 if [ -n "$$IPKG_INSTROOT" ]; then
 	# building
 	eval "$$(grep CONFIG_VERSION_NUMBER "$$TOPDIR/.config")"
@@ -47,12 +48,12 @@ if [ -n "$$IPKG_INSTROOT" ]; then
 	ARCH_PACKAGES=$$CONFIG_TARGET_ARCH_PACKAGES
 else
 	# system
-	eval "$$(grep DISTRIB_RELEASE /etc/openwrt_release)"
-	eval "$$(grep DISTRIB_REVISION /etc/openwrt_release)"
-	eval "$$(grep DISTRIB_ARCH /etc/openwrt_release)"
-	REVISION=$${DISTRIB_REVISION:1:5}
-	VERSION_NUMBER=$$DISTRIB_RELEASE
-	ARCH_PACKAGES=$$DISTRIB_ARCH
+	eval "$$(grep VERSION /etc/os-release)"
+	eval "$$(grep BUILD_ID /etc/os-release)"
+	eval "$$(grep OPENWRT_ARCH /etc/os-release)"
+	REVISION=$${BUILD_ID:1:5}
+	VERSION_NUMBER=$$VERSION
+	ARCH_PACKAGES=$$OPENWRT_ARCH
 fi
 if [ "$$VERSION_NUMBER" = "SNAPSHOT" ]; then
 	BRANCH="24.10"
