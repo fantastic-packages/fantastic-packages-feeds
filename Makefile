@@ -39,7 +39,7 @@ if [ -n "$$IPKG_INSTROOT" ]; then
 	eval "$$(grep CONFIG_VERSION_REPO "$$TOPDIR/.config")"
 	eval "$$(grep CONFIG_TARGET_ARCH_PACKAGES "$$TOPDIR/.config")"
 	REVISION=$$($$TOPDIR/scripts/getver.sh)
-	REVISION=$${REVISION:1:5}
+	REVISION=$$(echo "$$REVISION" | cut -f1 -d'-' | sed 's|[a-z]||gi')
 	if [ -n "$$CONFIG_VERSION_REPO" ]; then
 		VERSION_NUMBER=$${CONFIG_VERSION_REPO##*/}
 	else
@@ -48,12 +48,10 @@ if [ -n "$$IPKG_INSTROOT" ]; then
 	ARCH_PACKAGES=$$CONFIG_TARGET_ARCH_PACKAGES
 else
 	# system
-	eval "$$(grep VERSION /etc/os-release)"
-	eval "$$(grep BUILD_ID /etc/os-release)"
 	eval "$$(grep OPENWRT_ARCH /etc/os-release)"
-	REVISION=$${BUILD_ID:1:5}
-	VERSION_NUMBER=$$VERSION
 	ARCH_PACKAGES=$$OPENWRT_ARCH
+	REVISION=$$(ubus call system board | jsonfilter -qe '@.release.revision' | cut -f1 -d'-' | sed 's|[a-z]||gi')
+	VERSION_NUMBER=$$(ubus call system board | jsonfilter -qe '@.release.version')
 fi
 if [ "$$VERSION_NUMBER" = "SNAPSHOT" ]; then
 	BRANCH="24.10"
