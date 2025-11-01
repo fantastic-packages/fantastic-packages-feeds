@@ -5,7 +5,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=fantastic-packages-feeds
-PKG_VERSION:=20250513
+PKG_VERSION:=20251101
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Anya Lin <hukk1996@gmail.com>
@@ -68,7 +68,7 @@ else
 	BRANCH=$$(echo $$VERSION_NUMBER | awk -F '.' -v OFS='.' '{print $$1,$$2}')
 fi
 if ! grep -q fantastic_packages_ "$$IPKG_INSTROOT/etc/opkg/customfeeds.conf"; then
-	BASE_URL="https://fantastic-packages.github.io/releases"
+	BASE_URL="https://raw.githubusercontent.com/fantastic-packages/releases/archive"
 	BASE_URL="$$BASE_URL/$$BRANCH/packages/$$ARCH_PACKAGES"
 	cat <<- EOF >> "$$IPKG_INSTROOT/etc/opkg/customfeeds.conf"
 	src/gz fantastic_packages_packages $$BASE_URL/packages
