@@ -55,14 +55,11 @@ else
 fi
 if [ "$$VERSION_NUMBER" = "SNAPSHOT" ]; then
 	if   [ "$$REVISION" -ge 32306 ]; then BRANCH="25.12"
-	elif [ "$$REVISION" -ge 28158 ]; then BRANCH="24.10"
-	elif [ "$$REVISION" -ge 23069 ]; then BRANCH="23.05"
 	else 2>&1 echo "Current version of OpenWrt is no longer supported, please upgrade!"; exit 1;
 	fi
 	# https://archive.openwrt.org/releases/**/version.buildinfo
 	# r32306-4444f314ac    25.12
 	# r28158-d276b4c91a    24.10.0-rc1
-	# r23069-e2701e0f33    23.05.0-rc1
 else
 	BRANCH=$$(echo $$VERSION_NUMBER | awk -F '.' -v OFS='.' '{print $$1,$$2}')
 fi
