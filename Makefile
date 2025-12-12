@@ -5,7 +5,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=fantastic-packages-feeds
-PKG_VERSION:=20251211
+PKG_VERSION:=20251212
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Anya Lin <hukk1996@gmail.com>
@@ -38,8 +38,9 @@ if [ -n "$$IPKG_INSTROOT" ]; then
 	eval "$$(grep CONFIG_VERSION_NUMBER "$$TOPDIR/.config")"
 	eval "$$(grep CONFIG_VERSION_REPO "$$TOPDIR/.config")"
 	eval "$$(grep CONFIG_TARGET_ARCH_PACKAGES "$$TOPDIR/.config")"
-	REVISION=$$($$TOPDIR/scripts/getver.sh)
-	REVISION=$$(echo "$$REVISION" | cut -f1 -d'-' | sed 's|[a-z]||gi')
+	#REVISION=$$($$TOPDIR/scripts/getver.sh | cut -f1 -d'-' | sed 's|[a-z]||gi')
+	eval "$$(grep BUILD_ID "$$IPKG_INSTROOT/usr/lib/os-release")"
+	REVISION=$$(echo "$$BUILD_ID" | cut -f1 -d'-' | sed 's|[a-z]||gi')
 	if [ -n "$$CONFIG_VERSION_REPO" ]; then
 		VERSION_NUMBER=$${CONFIG_VERSION_REPO##*/}
 	else
@@ -54,7 +55,7 @@ else
 	VERSION_NUMBER=$$(ubus call system board | jsonfilter -qe '@.release.version')
 fi
 if [ "$$VERSION_NUMBER" = "SNAPSHOT" ]; then
-	if   [ "$$REVISION" -ge 32306 ]; then BRANCH="25.12"
+	if   [ "$$REVISION" -ge 32306 -o "$$REVISION" -eq 0 ]; then BRANCH="25.12"
 	else 2>&1 echo "Current version of OpenWrt is no longer supported, please upgrade!"; exit 1;
 	fi
 	# https://archive.openwrt.org/releases/**/version.buildinfo
