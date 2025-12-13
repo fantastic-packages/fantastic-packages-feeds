@@ -6,7 +6,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=fantastic-packages-feeds
 PKG_VERSION:=20251212
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_MAINTAINER:=Anya Lin <hukk1996@gmail.com>
 PKG_LICENSE:=MIT
@@ -19,7 +19,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/$(PKG_NAME)
   SECTION:=base
   CATEGORY:=Base system
-  DEPENDS:=+fantastic-keyring
+  DEPENDS:=+fantastic-keyring +apk
   TITLE:=Installer for fantastic-packages feeds
   PKGARCH:=all
 endef
