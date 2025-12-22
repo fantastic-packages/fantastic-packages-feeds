@@ -5,8 +5,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=fantastic-packages-feeds
-PKG_VERSION:=20251212
-PKG_RELEASE:=2
+PKG_VERSION:=20251222
+PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Anya Lin <hukk1996@gmail.com>
 PKG_LICENSE:=MIT
@@ -55,11 +55,11 @@ else
 	VERSION_NUMBER=$$(ubus call system board | jsonfilter -qe '@.release.version')
 fi
 if [ "$$VERSION_NUMBER" = "SNAPSHOT" ]; then
-	if   [ "$$REVISION" -ge 32306 -o "$$REVISION" -eq 0 ]; then BRANCH="25.12"
+	if   [ "$$REVISION" -ge 32353 -o "$$REVISION" -eq 0 ]; then BRANCH="25.12"
 	else 2>&1 echo "Current version of OpenWrt is no longer supported, please upgrade!"; exit 1;
 	fi
 	# https://archive.openwrt.org/releases/**/version.buildinfo
-	# r32306-4444f314ac    25.12
+	# r32353-9e9b05130c    25.12.0-rc1
 	# r28158-d276b4c91a    24.10.0-rc1
 else
 	BRANCH=$$(echo $$VERSION_NUMBER | awk -F '.' -v OFS='.' '{print $$1,$$2}')
