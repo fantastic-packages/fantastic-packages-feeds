@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: MIT
 #
-# Copyright (C) 2023-2025 fantastic-packages
+# Copyright (C) 2023-2026 fantastic-packages
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=fantastic-packages-feeds
-PKG_VERSION:=20251101
+PKG_VERSION:=20260101
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Anya Lin <hukk1996@gmail.com>
